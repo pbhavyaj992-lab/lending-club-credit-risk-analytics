@@ -72,3 +72,10 @@ Missing values: 33 loans with a null funded amount and 4,307 rows with missing D
 
 ## Stack
 Power BI, DAX, Python (pandas), SQL, PostgreSQL, Excel. Built by Bhavya Patel.
+
+## What I would do differently
+
+- All segment-level outputs (grade, purpose, FICO, DTI, vintage) come from the 98,292-row sample, not the full 2,260,701-row file. I would run the full file for the segment outputs too, in chunks, so the sample is a check rather than the source.
+- 33 loans with a null funded amount and 4,307 rows with missing DTI were dropped. I would model the missingness (do those rows charge off more often?) instead of dropping them silently.
+- Charge-off rates are observed among resolved loans only, so 2017–2018 vintages are understated. I would add a maturity-adjusted view, or at least a cohort table showing how many loans in each vintage had resolved.
+- There is no `.pbix` in this repo. I would build the Power BI report from `powerbi/model.md` and check every measure against `output/kpis.txt`.
